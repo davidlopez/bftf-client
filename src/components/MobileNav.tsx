@@ -1,4 +1,3 @@
-// import "./styles.css";
 import React, { useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -16,10 +15,10 @@ const MobileNav = (): React.ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="sticky top-0 flex items-end p-3 text-xl font-bold lg:hidden dark:bg-dm-foreground/50">
+    <div className="sticky top-0 flex items-end p-3 text-xl font-bold xl:hidden dark:bg-dm-foreground/50">
       <Link
         to="/"
-        className="mr-auto bg-gradient-to-r from-primary-dark from-10% via-yellow-300 via-60% to-red-600 to-90% bg-clip-text text-transparent"
+        className="mr-auto bg-gradient-to-r from-primary-dark from-10% via-yellow-300 via-60% to-red-500 to-90% bg-clip-text text-transparent"
       >
         BFTF Colorado
       </Link>
@@ -69,7 +68,7 @@ const MobileNav = (): React.ReactElement => {
           </svg>
         </motion.button>
         <motion.ul
-          className="absolute right-0 top-12 w-fit p-6 text-right dark:bg-dm-foreground/85"
+          className="absolute right-0 top-12 grid w-fit gap-3 p-6 text-right text-sm dark:bg-dm-foreground/85"
           variants={{
             open: {
               clipPath: "inset(0% 0% 0% 0% round 10px)",
@@ -107,6 +106,76 @@ const MobileNav = (): React.ReactElement => {
             >
               About
             </Link>
+          </motion.li>
+          <motion.li variants={itemVariants}>
+            <Link
+              to="/supporters"
+              className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
+            >
+              Supporters
+            </Link>
+          </motion.li>
+          <motion.li variants={itemVariants}>
+            <Link
+              to="/services"
+              className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
+            >
+              Services
+            </Link>
+          </motion.li>
+          <motion.li variants={itemVariants}>
+            <Link
+              to="/bod"
+              className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
+            >
+              Board of Directors
+            </Link>
+          </motion.li>
+          <motion.li variants={itemVariants}>
+            <Link
+              to="/news"
+              className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
+            >
+              In the News
+            </Link>
+          </motion.li>
+          <motion.li className="ml-auto flex items-end" variants={itemVariants}>
+            <a
+              href="http://www.bitnermemorialfund.org/"
+              target="_blank"
+              className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
+            >
+              Bitner Memorial 5K/10K
+            </a>
+            <svg width="21" height="21" viewBox="0 0 21 21">
+              <motion.path
+                d="M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11"
+                fill="transparent"
+                strokeWidth="2"
+                stroke="#5e616e"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </motion.li>
+          <motion.li className="ml-auto flex items-end" variants={itemVariants}>
+            <a
+              href="http://www.odmp.org/"
+              target="_blank"
+              className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
+            >
+              ODMP
+            </a>
+            <svg width="21" height="21" viewBox="0 0 21 21">
+              <motion.path
+                d="M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11"
+                fill="transparent"
+                strokeWidth="2"
+                stroke="#5e616e"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </motion.li>
           <motion.li variants={itemVariants}>
             <button className="rounded-md bg-primary px-4 py-3 dark:bg-dm-primary">
