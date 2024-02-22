@@ -3,7 +3,7 @@ import React from "react";
 const Footer = (): React.ReactElement => (
   <footer className="absolute bottom-0 flex h-48 w-full flex-col-reverse gap-6 p-3 text-xl font-bold lg:flex-row lg:items-center lg:gap-0 lg:px-12 dark:bg-dm-foreground/50">
     <div className="lg:mr-auto lg:text-3xl">
-      <div className="w-max bg-gradient-to-r from-primary-dark from-10% via-yellow-300 via-60% to-red-500 to-90% bg-clip-text text-transparent">
+      <div className="w-max bg-gradient-to-r from-primary-dark from-25% via-red-500 via-60% to-yellow-300 to-90% bg-clip-text text-transparent">
         BFTF Colorado
       </div>
       <p className="text-sm font-medium lg:text-xl">

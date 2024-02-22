@@ -21,7 +21,7 @@ const Nav = (): React.ReactElement => {
           <Link
             to="/"
             // className="bg-gradient-to-r from-primary-dark via-primary-content to-primary-dark bg-clip-text text-3xl text-transparent"
-            className="bg-gradient-to-r from-primary-dark from-10% via-yellow-300 via-60% to-red-500 to-90% bg-clip-text text-transparent"
+            className="bg-gradient-to-r from-primary-dark from-25% via-red-500 via-60% to-yellow-300 to-90% bg-clip-text text-transparent"
           >
             BFTF Colorado
           </Link>

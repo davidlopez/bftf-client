@@ -18,7 +18,7 @@ const MobileNav = (): React.ReactElement => {
     <div className="sticky top-0 flex items-end p-3 text-xl font-bold xl:hidden dark:bg-dm-foreground/50">
       <Link
         to="/"
-        className="mr-auto bg-gradient-to-r from-primary-dark from-10% via-yellow-300 via-60% to-red-500 to-90% bg-clip-text text-transparent"
+        className="mr-auto bg-gradient-to-r from-primary-dark from-25% via-red-500 via-60% to-yellow-300 to-90% bg-clip-text text-transparent"
       >
         BFTF Colorado
       </Link>
@@ -28,6 +28,7 @@ const MobileNav = (): React.ReactElement => {
         className="flex"
       >
         <motion.button
+          className="stroke-copy-lighter"
           whileTap={{ scale: 0.97 }}
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -35,7 +36,6 @@ const MobileNav = (): React.ReactElement => {
             <motion.path
               fill="transparent"
               strokeWidth="3"
-              stroke="hsl(0, 0%, 100%)"
               strokeLinecap="round"
               variants={{
                 closed: { d: "M 2 2.5 L 20 2.5" },
@@ -46,7 +46,6 @@ const MobileNav = (): React.ReactElement => {
               d="M 2 9.423 L 20 9.423"
               fill="transparent"
               strokeWidth="3"
-              stroke="hsl(0, 0%, 100%)"
               strokeLinecap="round"
               variants={{
                 closed: { opacity: 1 },
@@ -58,7 +57,6 @@ const MobileNav = (): React.ReactElement => {
               d="M 2 9.423 L 20 9.423"
               fill="transparent"
               strokeWidth="3"
-              stroke="hsl(0, 0%, 100%)"
               strokeLinecap="round"
               variants={{
                 closed: { d: "M 2 16.346 L 20 16.346" },
