@@ -99,14 +99,6 @@ const MobileNav = (): React.ReactElement => {
           </motion.li>
           <motion.li variants={itemVariants}>
             <Link
-              to="/about"
-              className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
-            >
-              About
-            </Link>
-          </motion.li>
-          <motion.li variants={itemVariants}>
-            <Link
               to="/supporters"
               className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
             >

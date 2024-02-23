@@ -10,7 +10,7 @@ const Accordian = (): React.ReactElement => {
   });
 
   return (
-    <div className="divide-y divide-copy-light">
+    <div className="mx-auto max-w-[1300px] divide-y divide-copy-light">
       <motion.div
         className="relative"
         animate={checkedMap.one ? "open" : "closed"}

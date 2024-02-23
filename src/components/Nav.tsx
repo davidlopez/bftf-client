@@ -20,7 +20,6 @@ const Nav = (): React.ReactElement => {
         <li className="mr-auto text-2xl">
           <Link
             to="/"
-            // className="bg-gradient-to-r from-primary-dark via-primary-content to-primary-dark bg-clip-text text-3xl text-transparent"
             className="bg-gradient-to-r from-primary-dark from-25% via-red-500 via-60% to-yellow-300 to-90% bg-clip-text text-transparent"
           >
             BFTF Colorado
@@ -32,14 +31,6 @@ const Nav = (): React.ReactElement => {
             className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
           >
             Home
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/about"
-            className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
-          >
-            About
           </Link>
         </li>
         <li>
