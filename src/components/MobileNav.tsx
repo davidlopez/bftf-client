@@ -15,7 +15,7 @@ const MobileNav = (): React.ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="sticky top-0 flex items-end p-3 text-xl font-bold xl:hidden dark:bg-dm-foreground/50">
+    <div className="sticky top-0 z-50 flex items-end p-3 text-xl font-bold xl:hidden dark:bg-dm-foreground/50">
       <Link
         to="/"
         className="mr-auto bg-gradient-to-r from-primary-dark from-25% via-red-500 via-60% to-yellow-300 to-90% bg-clip-text text-transparent"

@@ -15,7 +15,7 @@ const Nav = (): React.ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 hidden p-6 text-lg font-bold xl:block dark:bg-dm-foreground/50">
+    <nav className="sticky top-0 z-50 hidden p-6 text-lg font-bold xl:block dark:bg-dm-foreground/50">
       <ul className="flex items-center gap-6 dark:text-dm-primary-content">
         <li className="mr-auto text-2xl">
           <Link
