@@ -4,6 +4,7 @@ import Root from "./routes/Root.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./routes/Home.tsx";
+import BoardOfDirectors from "./routes/BoardOfDirectors.tsx";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/bod",
-        element: <h1>Board of Directors</h1>,
+        element: <BoardOfDirectors />,
       },
     ],
   },
