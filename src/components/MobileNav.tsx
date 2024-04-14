@@ -22,16 +22,8 @@ const MobileNav = (): React.ReactElement => {
       >
         BFTF Colorado
       </Link>
-      <motion.nav
-        initial={false}
-        animate={isOpen ? "open" : "closed"}
-        className="flex"
-      >
-        <motion.button
-          className="stroke-copy-lighter"
-          whileTap={{ scale: 0.97 }}
-          onClick={() => setIsOpen(!isOpen)}
-        >
+      <motion.nav initial={false} animate={isOpen ? "open" : "closed"} className="flex">
+        <motion.button className="stroke-copy-lighter" whileTap={{ scale: 0.97 }} onClick={() => setIsOpen(!isOpen)}>
           <svg width="23" height="23" viewBox="0 0 23 23">
             <motion.path
               fill="transparent"
@@ -105,14 +97,14 @@ const MobileNav = (): React.ReactElement => {
               Supporters
             </Link>
           </motion.li>
-          <motion.li variants={itemVariants}>
-            <Link
-              to="/services"
-              className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
-            >
-              Services
-            </Link>
-          </motion.li>
+          {/*<motion.li variants={itemVariants}>*/}
+          {/*  <Link*/}
+          {/*    to="/services"*/}
+          {/*    className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"*/}
+          {/*  >*/}
+          {/*    Services*/}
+          {/*  </Link>*/}
+          {/*</motion.li>*/}
           <motion.li variants={itemVariants}>
             <Link
               to="/bod"
@@ -121,14 +113,14 @@ const MobileNav = (): React.ReactElement => {
               Board of Directors
             </Link>
           </motion.li>
-          <motion.li variants={itemVariants}>
-            <Link
-              to="/news"
-              className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
-            >
-              In the News
-            </Link>
-          </motion.li>
+          {/*<motion.li variants={itemVariants}>*/}
+          {/*  <Link*/}
+          {/*    to="/news"*/}
+          {/*    className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"*/}
+          {/*  >*/}
+          {/*    In the News*/}
+          {/*  </Link>*/}
+          {/*</motion.li>*/}
           <motion.li className="ml-auto flex items-end" variants={itemVariants}>
             <a
               href="http://www.bitnermemorialfund.org/"
@@ -168,15 +160,14 @@ const MobileNav = (): React.ReactElement => {
             </svg>
           </motion.li>
           <motion.li variants={itemVariants}>
-            <button className="rounded-md bg-primary px-4 py-3 dark:bg-dm-primary">
+            <a
+              target="_blank"
+              href="https://www.paypal.com/paypalme/brotherhoodaurora"
+              className="rounded-md bg-primary px-4 py-3 dark:bg-dm-primary"
+            >
               SUPPORT US
-            </button>
+            </a>
           </motion.li>
-          {/*<motion.li variants={itemVariants}>Item 4</motion.li>*/}
-          {/*<motion.li variants={itemVariants}>Item 5 </motion.li>*/}
-          {/*<motion.li variants={itemVariants}>*/}
-          {/*  Item sdjflff reall long5{" "}*/}
-          {/*</motion.li>*/}
         </motion.ul>
       </motion.nav>
     </div>

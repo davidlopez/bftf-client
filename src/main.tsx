@@ -5,6 +5,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./routes/Home.tsx";
 import BoardOfDirectors from "./routes/BoardOfDirectors.tsx";
+import Supporters from "./components/Supporters.tsx";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/supporters",
-        element: <h1>Supporters</h1>,
+        element: <Supporters />,
       },
       {
         path: "/services",

@@ -41,14 +41,14 @@ const Nav = (): React.ReactElement => {
             Supporters
           </Link>
         </li>
-        <li>
-          <Link
-            to="/services"
-            className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
-          >
-            Services
-          </Link>
-        </li>
+        {/*<li>*/}
+        {/*  <Link*/}
+        {/*    to="/services"*/}
+        {/*    className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"*/}
+        {/*  >*/}
+        {/*    Services*/}
+        {/*  </Link>*/}
+        {/*</li>*/}
         <li>
           <Link
             to="/bod"
@@ -57,14 +57,14 @@ const Nav = (): React.ReactElement => {
             Board of Directors
           </Link>
         </li>
-        <li>
-          <Link
-            to="/news"
-            className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"
-          >
-            In the News
-          </Link>
-        </li>
+        {/*<li>*/}
+        {/*  <Link*/}
+        {/*    to="/news"*/}
+        {/*    className="text-copy-lighter transition delay-100 duration-300 ease-in hover:text-primary-content"*/}
+        {/*  >*/}
+        {/*    In the News*/}
+        {/*  </Link>*/}
+        {/*</li>*/}
         <motion.nav
           onHoverStart={() => setIsOpen(true)}
           initial={false}
@@ -115,10 +115,7 @@ const Nav = (): React.ReactElement => {
             }}
             style={{ pointerEvents: isOpen ? "auto" : "none" }}
           >
-            <motion.li
-              className="ml-auto flex items-end"
-              variants={itemVariants}
-            >
+            <motion.li className="ml-auto flex items-end" variants={itemVariants}>
               <a
                 href="http://www.bitnermemorialfund.org/"
                 target="_blank"
@@ -137,10 +134,7 @@ const Nav = (): React.ReactElement => {
                 />
               </svg>
             </motion.li>
-            <motion.li
-              className="ml-auto flex items-end"
-              variants={itemVariants}
-            >
+            <motion.li className="ml-auto flex items-end" variants={itemVariants}>
               <a
                 href="http://www.odmp.org/"
                 target="_blank"
@@ -162,9 +156,13 @@ const Nav = (): React.ReactElement => {
           </motion.ul>
         </motion.nav>
         <li>
-          <button className="rounded-md bg-primary px-4 py-3 dark:bg-dm-primary">
+          <a
+            target="_blank"
+            href="https://www.paypal.com/paypalme/brotherhoodaurora"
+            className="rounded-md bg-primary px-4 py-3 dark:bg-dm-primary"
+          >
             SUPPORT US
-          </button>
+          </a>
         </li>
       </ul>
     </nav>
