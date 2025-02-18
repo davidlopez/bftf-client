@@ -11,7 +11,7 @@ const itemVariants: Variants = {
   closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
 };
 
-const MobileNav = (): React.ReactElement => {
+const MobileNav: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

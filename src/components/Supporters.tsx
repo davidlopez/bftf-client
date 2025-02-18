@@ -1,6 +1,6 @@
 import React from "react";
 
-const Supporters = (): React.ReactElement => (
+const Supporters: React.FC = () => (
   <div className="grid gap-6">
     <section>
       <div className="sponsor-logos flex flex-wrap justify-center gap-6">

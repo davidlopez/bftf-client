@@ -1,8 +1,8 @@
 import React from "react";
 import bftfbanner from "../assets/bftfbanner.png";
-import Accordian from "../components/Accordian.tsx";
+import Accordion from "../components/Accordion.tsx";
 
-const Home = (): React.ReactElement => (
+const Home: React.FC = () => (
   <>
     <img
       className="mx-auto mb-6 rounded-lg bg-transparent bg-gradient-to-tr from-transparent via-primary-content/40 to-transparent"
@@ -10,7 +10,7 @@ const Home = (): React.ReactElement => (
       alt="Brotherhood for the fallen banner"
     />
 
-    <Accordian />
+    <Accordion />
   </>
 );
 
