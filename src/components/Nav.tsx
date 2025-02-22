@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "@tanstack/react-router";
 import { motion, Variants } from "framer-motion";
 
@@ -12,7 +12,7 @@ const itemVariants: Variants = {
 };
 
 const Nav: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <nav className="sticky top-0 z-50 hidden p-6 text-lg font-bold xl:block dark:bg-dm-foreground/50">

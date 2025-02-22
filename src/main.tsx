@@ -4,7 +4,7 @@ import Root from "./routes/Root.tsx";
 import "./index.css";
 import Home from "./routes/Home.tsx";
 import BoardOfDirectors from "./routes/BoardOfDirectors.tsx";
-import Supporters from "./components/Supporters.tsx";
+import Supporters from "./routes/Supporters.tsx";
 import { createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
 
 const rootRoute = createRootRoute({ component: () => <Root /> });

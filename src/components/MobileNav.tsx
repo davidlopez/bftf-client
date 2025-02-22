@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion, Variants } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 
@@ -12,7 +12,7 @@ const itemVariants: Variants = {
 };
 
 const MobileNav: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <div className="sticky top-0 z-50 flex items-end p-3 text-xl font-bold xl:hidden dark:bg-dm-foreground/50">
