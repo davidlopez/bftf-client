@@ -16,6 +16,7 @@
 
   let mobileOpen = $state(false);
   let partnerOpen = $state(false);
+  let partnerCloseTimer: ReturnType<typeof setTimeout> | null = null;
   let { theme = "light", onThemeToggle } = $props<{ theme?: Theme; onThemeToggle: () => void }>();
 
   const isActive = (href: string) => (href === "/" ? page.url.pathname === "/" : page.url.pathname.startsWith(href));
@@ -23,6 +24,22 @@
   const closeMenus = () => {
     mobileOpen = false;
     partnerOpen = false;
+  };
+
+  const openPartners = () => {
+    if (partnerCloseTimer) {
+      clearTimeout(partnerCloseTimer);
+      partnerCloseTimer = null;
+    }
+    partnerOpen = true;
+  };
+
+  const closePartnersWithDelay = () => {
+    if (partnerCloseTimer) clearTimeout(partnerCloseTimer);
+    partnerCloseTimer = setTimeout(() => {
+      partnerOpen = false;
+      partnerCloseTimer = null;
+    }, 140);
   };
 </script>
 
@@ -55,7 +72,7 @@
         <a class:active={isActive(link.href)} href={link.href}>{link.label}</a>
       {/each}
 
-      <div class="dropdown" role="presentation" onmouseenter={() => (partnerOpen = true)} onmouseleave={() => (partnerOpen = false)}>
+      <div class="dropdown" role="presentation" onmouseenter={openPartners} onmouseleave={closePartnersWithDelay}>
         <button aria-expanded={partnerOpen} type="button" onclick={() => (partnerOpen = !partnerOpen)}>
           Events &amp; Partners
           <span class:chevOpen={partnerOpen}>⌄</span>
@@ -74,7 +91,18 @@
 
     <nav class="mobile-nav" aria-label="Mobile navigation">
       <a class="brand" href="/" onclick={closeMenus}>BFTF Colorado</a>
-      <button class="hamburger" aria-expanded={mobileOpen} type="button" onclick={() => (mobileOpen = !mobileOpen)}> ☰ </button>
+      <button
+        class="hamburger"
+        class:is-open={mobileOpen}
+        aria-expanded={mobileOpen}
+        type="button"
+        onclick={() => (mobileOpen = !mobileOpen)}
+        aria-label="Toggle navigation menu"
+      >
+        <span class="bar bar-1"></span>
+        <span class="bar bar-2"></span>
+        <span class="bar bar-3"></span>
+      </button>
 
       {#if mobileOpen}
         <div class="mobile-panel">
@@ -165,6 +193,10 @@
       align-items: center;
       gap: 0.3rem;
       font-weight: 600;
+
+      span {
+        transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
     }
   }
 
@@ -293,10 +325,47 @@
   .hamburger {
     border: 1px solid var(--border);
     border-radius: 0.65rem;
-    background: var(--surface);
+    background: var(--surface-muted);
+    color: var(--text);
     width: 2.35rem;
     height: 2.35rem;
-    font-size: 1.2rem;
+    padding: 0;
+    display: grid;
+    place-items: center;
+
+    .bar {
+      grid-area: 1 / 1;
+      width: 0.95rem;
+      height: 2px;
+      border-radius: 2px;
+      background: currentColor;
+      transition:
+        transform 220ms ease,
+        opacity 180ms ease;
+      transform-origin: center;
+    }
+
+    .bar-1 {
+      transform: translateY(-3px);
+    }
+
+    .bar-3 {
+      transform: translateY(3px);
+    }
+
+    &.is-open {
+      .bar-1 {
+        transform: translateY(0) rotate(45deg);
+      }
+
+      .bar-2 {
+        opacity: 0;
+      }
+
+      .bar-3 {
+        transform: translateY(0) rotate(-45deg);
+      }
+    }
   }
 
   .mobile-panel {

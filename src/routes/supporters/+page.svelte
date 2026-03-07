@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+
   const logos = [
     "https://upload.wikimedia.org/wikipedia/en/thumb/4/45/Colorado_Avalanche_logo.svg/1200px-Colorado_Avalanche_logo.svg.png",
     "https://www.coloradobrewerylist.com/wp-content/uploads/2014/06/launch-pad.png",
@@ -13,6 +15,56 @@
     "https://logos-world.net/wp-content/uploads/2021/03/Charles-Schwab-Symbol.png",
     "https://frannet.com/wp-content/uploads/2022/05/D842854E-97DD-4846-A239AA937B8CE670.gif"
   ];
+
+  const rowHeight = 84;
+  const outerPad = 0;
+  const cardWidth = 180;
+  const baseSpacing = cardWidth - 26;
+  const speed = 48;
+
+  let flowEl = $state<HTMLElement | null>(null);
+  let flowWidth = $state(0);
+  let tickSeconds = $state(0);
+
+  const laneWidth = $derived.by(() => Math.max(flowWidth - outerPad * 2, 260));
+  const flowHeight = outerPad * 2 + rowHeight;
+  const spacing = $derived.by(() => Math.max(baseSpacing, Math.ceil((laneWidth + cardWidth + baseSpacing) / logos.length)));
+
+  const logoStyle = (index: number) => {
+    const loopDistance = logos.length * spacing;
+
+    const d = (((tickSeconds * speed + index * spacing) % loopDistance) + loopDistance) % loopDistance;
+    const y = outerPad + rowHeight / 2;
+    const x = -cardWidth / 2 + d + outerPad;
+
+    return `left:${x}px;top:${y}px;`;
+  };
+
+  onMount(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const observer = new ResizeObserver((entries) => {
+      flowWidth = entries[0]?.contentRect.width ?? 0;
+    });
+
+    if (flowEl) observer.observe(flowEl);
+
+    if (reducedMotion) {
+      return () => observer.disconnect();
+    }
+
+    let frame = 0;
+    const start = performance.now();
+    const loop = (now: number) => {
+      tickSeconds = (now - start) / 1000;
+      frame = requestAnimationFrame(loop);
+    };
+    frame = requestAnimationFrame(loop);
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
+  });
 
   const tiers = [
     {
@@ -69,36 +121,67 @@
       ]
     }
   ];
+
+  const totalSupporters = tiers.reduce((count, tier) => count + tier.entries.length, 0);
 </script>
 
-<section class="headline">
-  <h1>Supporters</h1>
-  <p>Businesses and community members who make our mission possible.</p>
-</section>
-
-<section class="logos" aria-label="Supporter logos">
-  {#each logos as logo}
-    <article>
-      <img src={logo} alt="Supporter logo" loading="lazy" />
-    </article>
-  {/each}
-</section>
-
-<section class="tiers">
-  {#each tiers as tier}
-    <article>
-      <h2>{tier.name}</h2>
-      <ul>
-        {#each tier.entries as entry}
-          <li>{entry}</li>
+<section class="supporters-stage">
+  <section class="headline">
+    <div class="logos" aria-hidden="true">
+      <div class="logo-flow" bind:this={flowEl} style={`height:${flowHeight}px`}>
+        {#each logos as logo, index}
+          <article style={logoStyle(index)}>
+            <img src={logo} alt="" loading="lazy" />
+          </article>
         {/each}
-      </ul>
-    </article>
-  {/each}
+      </div>
+    </div>
+
+    <h1>Supporters</h1>
+    <p>Businesses and community members who make our mission possible.</p>
+  </section>
+
+  <section class="tiers" aria-label="Supporter contribution levels">
+    <header class="tiers-header">
+      <h2>Supporter Honor Roll</h2>
+      <p>{totalSupporters} recognized supporters across all contribution levels.</p>
+    </header>
+
+    <div class="tier-stack">
+      {#each tiers as tier}
+        <article class="tier-band">
+          <div class="tier-top">
+            <h3>{tier.name}</h3>
+            <span>{tier.entries.length} supporters</span>
+          </div>
+          <ul class="tier-list">
+            {#each tier.entries as entry}
+              <li>{entry}</li>
+            {/each}
+          </ul>
+        </article>
+      {/each}
+    </div>
+  </section>
 </section>
 
 <style lang="scss">
+  .supporters-stage {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    gap: 1.2rem;
+    padding-top: 0.8rem;
+  }
+
   .headline {
+    position: relative;
+    z-index: 2;
+    overflow: visible;
+    border-radius: 0.9rem;
+    min-height: 120px;
+    padding: 1rem 0;
+
     h1 {
       margin: 0;
       font-size: clamp(1.8rem, 2.8vw, 2.4rem);
@@ -111,54 +194,145 @@
   }
 
   .logos {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 0.9rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100vw;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.22;
+  }
 
-    article {
-      border-radius: 0.9rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      height: 102px;
-      padding: 0.7rem;
-      display: grid;
-      place-items: center;
-      box-shadow: var(--shadow);
-    }
+  .logo-flow {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
 
-    img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
+  .logo-flow article {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: clamp(150px, 18vw, 180px);
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem;
+    overflow: hidden;
+  }
+
+  .logo-flow img {
+    width: auto;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    min-height: 100%;
+    object-position: center;
+    display: block;
   }
 
   .tiers {
+    position: relative;
+    z-index: 2;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
+    gap: 0.9rem;
+  }
 
-    article {
-      border-radius: 0.9rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 1rem;
-      box-shadow: var(--shadow);
-    }
+  .tiers-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
 
     h2 {
-      margin: 0 0 0.55rem;
-      font-size: 1.05rem;
+      margin: 0;
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
       color: var(--brand);
+      letter-spacing: 0.01em;
     }
 
-    ul {
+    p {
       margin: 0;
-      padding-left: 1rem;
       color: var(--muted);
-      display: grid;
-      gap: 0.3rem;
-      line-height: 1.45;
+      font-size: 0.94rem;
+    }
+  }
+
+  .tier-stack {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .tier-band {
+    border-radius: 0.95rem;
+    background: color-mix(in oklab, var(--surface) 92%, transparent 8%);
+    border: 1px solid var(--border);
+    padding: 0.9rem 1rem;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(1px);
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .tier-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+
+    h3 {
+      margin: 0;
+      font-size: 1.02rem;
+      color: var(--brand);
+      line-height: 1.3;
+    }
+
+    span {
+      flex-shrink: 0;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--brand) 14%, transparent 86%);
+      border: 1px solid color-mix(in oklab, var(--brand) 30%, var(--border) 70%);
+      color: var(--brand);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      padding: 0.23rem 0.52rem;
+    }
+  }
+
+  .tier-list {
+    margin: 0;
+    padding-left: 0;
+    color: var(--muted);
+    display: grid;
+    gap: 0.42rem 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    line-height: 1.4;
+    list-style: none;
+
+    li {
+      position: relative;
+      padding-left: 1rem;
+      font-size: 0.93rem;
+    }
+
+    li::before {
+      content: "";
+      position: absolute;
+      left: 0.1rem;
+      top: 0.53rem;
+      width: 0.38rem;
+      height: 0.38rem;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--brand) 72%, var(--accent) 28%);
+    }
+  }
+
+  @media (max-width: 680px) {
+    .tier-list {
+      grid-template-columns: 1fr;
     }
   }
 </style>

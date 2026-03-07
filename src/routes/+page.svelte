@@ -5,7 +5,7 @@
   const commitments = [
     {
       title: "Honor At Every Service",
-      text: "Volunteer officers travel to stand watch, provide respectful presence, and ensure fallen officers receive the full honor they earned."
+      text: "Officers travel to stand watch, provide respectful presence, and ensure fallen officers receive the full honor they earned."
     },
     {
       title: "Family-First Support",
@@ -19,14 +19,15 @@
 </script>
 
 <section class="hero">
-  <img src={banner} alt="Brotherhood for the Fallen banner" />
+  <div class="hero-media">
+    <img src={banner} alt="Brotherhood for the Fallen banner" />
+  </div>
 
   <div class="hero-content">
     <p class="eyebrow">Brotherhood For The Fallen Colorado</p>
     <h1>Standing With Families When The Line Of Duty Takes One Of Our Own.</h1>
     <p>
-      We are a police-led volunteer organization supporting families, departments, and communities during line-of-duty loss. Our mission is simple: show up, stand strong, and carry
-      the burden together.
+      Brotherhood for the Fallen Colorado is a nonprofit led by officers and deputies from Aurora, Englewood, Thornton, and the Douglas County Sheriff’s Office. We provide emotional and financial support to the families of officers killed in the line of duty in Colorado and nationwide.
     </p>
     <div class="hero-actions">
       <a href="https://www.paypal.com/paypalme/brotherhoodaurora" target="_blank" rel="noreferrer">Donate</a>
@@ -51,7 +52,7 @@
 <section class="about">
   <div>
     <h2>Built By Officers. Powered By Community.</h2>
-    <p>From Aurora to agencies across Colorado, our volunteers coordinate travel, ceremony attendance, and family support efforts so no department faces these moments alone.</p>
+    <p>From Aurora to agencies across Colorado, our officers coordinate travel, ceremony attendance, and family support efforts so no department faces these moments alone.</p>
     <p>Every contribution supports direct mission operations: officer attendance, memorial support, and family-centered outreach.</p>
   </div>
 
@@ -77,12 +78,23 @@
     box-shadow: var(--shadow);
     background: linear-gradient(140deg, var(--hero-top), var(--hero-bottom));
 
+  }
+
+  .hero-media {
+    min-height: 320px;
+    padding: 1rem;
+    background:
+      radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.44), rgba(241, 246, 255, 0.34) 55%, rgba(219, 230, 248, 0.24)),
+      linear-gradient(130deg, rgba(255, 255, 255, 0.28), rgba(229, 238, 252, 0.2));
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+
     img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      min-height: 320px;
-      filter: saturate(0.95) contrast(1.03);
+      max-height: 290px;
+      object-fit: contain;
+      filter: saturate(0.98) contrast(1.03);
     }
   }
 
@@ -233,8 +245,12 @@
     .hero {
       grid-template-columns: 1fr;
 
-      img {
-        max-height: 310px;
+      .hero-media {
+        min-height: 280px;
+
+        img {
+          max-height: 250px;
+        }
       }
     }
 

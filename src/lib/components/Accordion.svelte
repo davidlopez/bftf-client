@@ -31,7 +31,11 @@
     <section class="item" role="listitem">
       <button type="button" class="trigger" class:open={openIndex === index} aria-expanded={openIndex === index} onclick={() => (openIndex = openIndex === index ? -1 : index)}>
         <span>{section.title}</span>
-        <span class:open={openIndex === index}>⌄</span>
+        <span class="chevron" class:open={openIndex === index} aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none">
+            <path d="M4 7 L10 13 L16 7" />
+          </svg>
+        </span>
       </button>
 
       {#if openIndex === index}
@@ -69,11 +73,27 @@
     color: var(--text);
     cursor: pointer;
 
-    span:last-child {
+    .chevron {
+      width: 1rem;
+      height: 1rem;
+      display: grid;
+      place-items: center;
       transition: transform 150ms ease;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      path {
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
     }
 
-    span.open {
+    .chevron.open {
       transform: rotate(180deg);
     }
   }
