@@ -27,57 +27,71 @@
 </script>
 
 <header class="site-header">
-  <nav class="desktop-nav" aria-label="Primary navigation">
-    <a class="brand" href="/">BFTF Colorado</a>
-
-    {#each links as link}
-      <a class:active={isActive(link.href)} href={link.href}>{link.label}</a>
-    {/each}
-
-    <div class="dropdown" role="presentation" onmouseenter={() => (partnerOpen = true)} onmouseleave={() => (partnerOpen = false)}>
-      <button aria-expanded={partnerOpen} type="button" onclick={() => (partnerOpen = !partnerOpen)}>
-        Events &amp; Partners
-        <span class:chevOpen={partnerOpen}>⌄</span>
-      </button>
-      {#if partnerOpen}
-        <div class="dropdown-menu">
-          {#each partnerLinks as partner}
-            <a href={partner.href} target="_blank" rel="noreferrer">{partner.label}</a>
-          {/each}
-        </div>
-      {/if}
-    </div>
-
-    <button class="theme-toggle" type="button" onclick={onThemeToggle} aria-label="Toggle light and dark mode">
-      {theme === "light" ? "Dark Mode" : "Light Mode"}
+  <div class="header-inner">
+    <button
+      class="theme-toggle"
+      class:is-dark={theme === "dark"}
+      type="button"
+      onclick={onThemeToggle}
+      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+    >
+      <span class="icon sun" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="12" cy="12" r="4.2" />
+          <path d="M12 2.5v2.2M12 19.3v2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+        </svg>
+      </span>
+      <span class="icon moon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.2 14.8a8.4 8.4 0 0 1-10-10A9.2 9.2 0 1 0 21 16.6a7.6 7.6 0 0 1-1.8-1.8z" />
+        </svg>
+      </span>
     </button>
 
-    <a class="donate" href="https://www.paypal.com/paypalme/brotherhoodaurora" target="_blank" rel="noreferrer"> Support Us </a>
-  </nav>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="brand" href="/">BFTF Colorado</a>
 
-  <nav class="mobile-nav" aria-label="Mobile navigation">
-    <a class="brand" href="/" onclick={closeMenus}>BFTF Colorado</a>
-    <button class="hamburger" aria-expanded={mobileOpen} type="button" onclick={() => (mobileOpen = !mobileOpen)}> ☰ </button>
+      {#each links as link}
+        <a class:active={isActive(link.href)} href={link.href}>{link.label}</a>
+      {/each}
 
-    {#if mobileOpen}
-      <div class="mobile-panel">
-        {#each links as link}
-          <a class:active={isActive(link.href)} href={link.href} onclick={closeMenus}>{link.label}</a>
-        {/each}
-
-        <div class="mobile-group">Events &amp; Partners</div>
-        {#each partnerLinks as partner}
-          <a class="partner-link" href={partner.href} target="_blank" rel="noreferrer">{partner.label}</a>
-        {/each}
-
-        <button class="theme-toggle mobile-theme" type="button" onclick={onThemeToggle}>
-          {theme === "light" ? "Dark Mode" : "Light Mode"}
+      <div class="dropdown" role="presentation" onmouseenter={() => (partnerOpen = true)} onmouseleave={() => (partnerOpen = false)}>
+        <button aria-expanded={partnerOpen} type="button" onclick={() => (partnerOpen = !partnerOpen)}>
+          Events &amp; Partners
+          <span class:chevOpen={partnerOpen}>⌄</span>
         </button>
-
-        <a class="donate" href="https://www.paypal.com/paypalme/brotherhoodaurora" target="_blank" rel="noreferrer"> Support Us </a>
+        {#if partnerOpen}
+          <div class="dropdown-menu">
+            {#each partnerLinks as partner}
+              <a href={partner.href} target="_blank" rel="noreferrer">{partner.label}</a>
+            {/each}
+          </div>
+        {/if}
       </div>
-    {/if}
-  </nav>
+
+      <a class="donate" href="https://www.paypal.com/paypalme/brotherhoodaurora" target="_blank" rel="noreferrer"> Support Us </a>
+    </nav>
+
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      <a class="brand" href="/" onclick={closeMenus}>BFTF Colorado</a>
+      <button class="hamburger" aria-expanded={mobileOpen} type="button" onclick={() => (mobileOpen = !mobileOpen)}> ☰ </button>
+
+      {#if mobileOpen}
+        <div class="mobile-panel">
+          {#each links as link}
+            <a class:active={isActive(link.href)} href={link.href} onclick={closeMenus}>{link.label}</a>
+          {/each}
+
+          <div class="mobile-group">Events &amp; Partners</div>
+          {#each partnerLinks as partner}
+            <a class="partner-link" href={partner.href} target="_blank" rel="noreferrer">{partner.label}</a>
+          {/each}
+
+          <a class="donate" href="https://www.paypal.com/paypalme/brotherhoodaurora" target="_blank" rel="noreferrer"> Support Us </a>
+        </div>
+      {/if}
+    </nav>
+  </div>
 </header>
 
 <style lang="scss">
@@ -90,6 +104,11 @@
     border-bottom: 1px solid rgba(16, 35, 73, 0.08);
   }
 
+  .header-inner {
+    width: 100%;
+    position: relative;
+  }
+
   .desktop-nav,
   .mobile-nav {
     margin: 0 auto;
@@ -97,7 +116,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 0.85rem 0;
+    padding: 0.85rem 3.5rem 0.85rem 0;
   }
 
   .brand {
@@ -180,29 +199,87 @@
   }
 
   .theme-toggle {
+    position: absolute;
+    top: 50%;
+    right: max(0.65rem, env(safe-area-inset-right));
+    transform: translateY(-50%);
+    z-index: 30;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--brand);
-    border-radius: 0.65rem;
-    padding: 0.62rem 0.8rem;
-    font: inherit;
-    font-weight: 700;
+    box-shadow: var(--shadow-soft);
     cursor: pointer;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    isolation: isolate;
     transition:
-      color 150ms ease,
-      border-color 150ms ease,
-      transform 150ms ease;
+      border-color 180ms ease,
+      transform 180ms ease,
+      color 180ms ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -55%;
+      background: conic-gradient(from 0deg, transparent, rgba(95, 152, 255, 0.35), transparent 42%);
+      opacity: 0;
+      transform: rotate(0deg);
+      transition: opacity 200ms ease;
+      animation: spin 1.8s linear infinite;
+      z-index: -1;
+    }
 
     &:hover {
-      color: var(--brand-strong);
+      transform: translateY(calc(-50% - 1px));
       border-color: var(--brand);
-      transform: translateY(-1px);
-    }
-  }
+      color: var(--brand-strong);
 
-  .mobile-theme {
-    width: 100%;
-    text-align: center;
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    .icon {
+      position: absolute;
+      width: 1.25rem;
+      height: 1.25rem;
+      display: grid;
+      place-items: center;
+      transition:
+        opacity 260ms ease,
+        transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .sun {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+    }
+
+    .moon {
+      opacity: 0;
+      transform: rotate(-80deg) scale(0.35);
+    }
+
+    &.is-dark {
+      .sun {
+        opacity: 0;
+        transform: rotate(90deg) scale(0.32);
+      }
+
+      .moon {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+      }
+    }
   }
 
   .chevOpen {
@@ -227,6 +304,7 @@
     left: 3vw;
     right: 3vw;
     top: calc(100% + 0.5rem);
+    z-index: 20;
     display: grid;
     gap: 0.8rem;
     padding: 1rem;
@@ -251,6 +329,12 @@
     }
   }
 
+  @keyframes spin {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
   @media (max-width: 920px) {
     .desktop-nav {
       display: none;
@@ -259,6 +343,13 @@
     .mobile-nav {
       display: flex;
       position: relative;
+      padding-right: 3.2rem;
+    }
+
+    .theme-toggle {
+      top: 50%;
+      width: 2.3rem;
+      height: 2.3rem;
     }
   }
 </style>
