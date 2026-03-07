@@ -2,6 +2,22 @@
   import banner from "../assets/bftfbanner.png";
   import Accordion from "$lib/components/Accordion.svelte";
 
+  const deploymentModules = import.meta.glob("../assets/deployments/*.PNG", {
+    eager: true,
+    import: "default"
+  }) as Record<string, string>;
+
+  const deployments = Object.entries(deploymentModules)
+    .sort((a, b) => {
+      const aNum = Number(a[0].match(/\/(\d+)\.png$/i)?.[1] ?? 0);
+      const bNum = Number(b[0].match(/\/(\d+)\.png$/i)?.[1] ?? 0);
+      return aNum - bNum;
+    })
+    .map(([, src], index) => ({
+      src,
+      label: `Deployment ${String(index + 1).padStart(2, "0")}`
+    }));
+
   const commitments = [
     {
       title: "Honor At Every Service",
@@ -27,7 +43,8 @@
     <p class="eyebrow">Brotherhood For The Fallen Colorado</p>
     <h1>Standing With Families When The Line Of Duty Takes One Of Our Own.</h1>
     <p>
-      Brotherhood for the Fallen Colorado is a nonprofit led by officers and deputies from Aurora, Englewood, Thornton, and the Douglas County Sheriff’s Office. We provide emotional and financial support to the families of officers killed in the line of duty in Colorado and nationwide.
+      Brotherhood for the Fallen Colorado is a nonprofit led by officers and deputies from Aurora, Englewood, Thornton, and the Douglas County Sheriff’s Office. We provide
+      emotional and financial support to the families of officers killed in the line of duty in Colorado and nationwide.
     </p>
     <div class="hero-actions">
       <a href="https://www.paypal.com/paypalme/brotherhoodaurora" target="_blank" rel="noreferrer">Donate</a>
@@ -67,6 +84,22 @@
   </aside>
 </section>
 
+<section class="deployments" aria-label="Past deployments gallery">
+  <header>
+    <p class="eyebrow">Past Deployments</p>
+    <h2>Moments of Service Across Our Mission</h2>
+    <p>A look at deployment efforts where members of BFTF Colorado stood with agencies, families, and communities.</p>
+  </header>
+
+  <div class="deployment-grid">
+    {#each deployments as deployment, index}
+      <figure class:featured={index === 0}>
+        <img src={deployment.src} alt={deployment.label} loading="lazy" />
+      </figure>
+    {/each}
+  </div>
+</section>
+
 <Accordion />
 
 <style lang="scss">
@@ -77,7 +110,6 @@
     overflow: hidden;
     box-shadow: var(--shadow);
     background: linear-gradient(140deg, var(--hero-top), var(--hero-bottom));
-
   }
 
   .hero-media {
@@ -241,6 +273,70 @@
     }
   }
 
+  .deployments {
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: color-mix(in oklab, var(--surface) 94%, transparent 6%);
+    box-shadow: var(--shadow-soft);
+    padding: 1rem;
+    display: grid;
+    gap: 0.9rem;
+
+    header {
+      display: grid;
+      gap: 0.3rem;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: color-mix(in oklab, var(--brand) 75%, var(--accent) 25%);
+      text-transform: uppercase;
+      font-size: 0.73rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+      line-height: 1.22;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 70ch;
+    }
+  }
+
+  .deployment-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.7rem;
+
+    figure {
+      margin: 0;
+      border-radius: 0.8rem;
+      overflow: hidden;
+      display: block;
+      height: 170px;
+    }
+
+    figure.featured {
+      grid-column: span 2;
+      grid-row: span 2;
+      height: 355px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
   @media (max-width: 950px) {
     .hero {
       grid-template-columns: 1fr;
@@ -256,6 +352,20 @@
 
     .about {
       grid-template-columns: 1fr;
+    }
+
+    .deployment-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      figure {
+        height: 170px;
+      }
+
+      figure.featured {
+        grid-column: span 2;
+        grid-row: span 1;
+        height: 250px;
+      }
     }
   }
 </style>

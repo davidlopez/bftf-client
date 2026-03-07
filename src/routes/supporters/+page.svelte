@@ -147,18 +147,22 @@
       <p>{totalSupporters} recognized supporters across all contribution levels.</p>
     </header>
 
-    <div class="tier-stack">
-      {#each tiers as tier}
-        <article class="tier-band">
+    <div class="tier-grid">
+      {#each tiers as tier, index}
+        <article class="tier-card" class:prestige={index < 2}>
           <div class="tier-top">
+            <p class="tier-label">Contribution Tier</p>
             <h3>{tier.name}</h3>
             <span>{tier.entries.length} supporters</span>
           </div>
-          <ul class="tier-list">
-            {#each tier.entries as entry}
-              <li>{entry}</li>
-            {/each}
-          </ul>
+
+          <div class="tier-body">
+            <ul class="tier-list">
+              {#each tier.entries as entry}
+                <li>{entry}</li>
+              {/each}
+            </ul>
+          </div>
         </article>
       {/each}
     </div>
@@ -178,9 +182,14 @@
     position: relative;
     z-index: 2;
     overflow: visible;
-    border-radius: 0.9rem;
+    border-radius: 1rem;
     min-height: 120px;
-    padding: 1rem 0;
+    padding: 1.1rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    background:
+      linear-gradient(145deg, color-mix(in oklab, var(--surface) 86%, var(--brand) 14%), color-mix(in oklab, var(--surface) 88%, var(--accent) 12%)),
+      color-mix(in oklab, var(--surface) 90%, transparent 10%);
 
     h1 {
       margin: 0;
@@ -260,31 +269,66 @@
     }
   }
 
-  .tier-stack {
+  .tier-grid {
     display: grid;
-    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.85rem;
   }
 
-  .tier-band {
-    border-radius: 0.95rem;
-    background: color-mix(in oklab, var(--surface) 92%, transparent 8%);
+  .tier-card {
+    border-radius: 1rem;
+    background: color-mix(in oklab, var(--surface) 94%, transparent 6%);
     border: 1px solid var(--border);
-    padding: 0.9rem 1rem;
+    overflow: hidden;
     box-shadow: var(--shadow);
     backdrop-filter: blur(1px);
     display: grid;
-    gap: 0.75rem;
+    grid-template-rows: auto 1fr;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      border-color 180ms ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px rgba(9, 25, 53, 0.16);
+      border-color: color-mix(in oklab, var(--brand) 40%, var(--border) 60%);
+    }
+  }
+
+  .tier-card.prestige {
+    border-color: color-mix(in oklab, var(--accent) 40%, var(--border) 60%);
   }
 
   .tier-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.6rem;
+    padding: 0.8rem 0.9rem 0.75rem;
+    border-bottom: 1px solid color-mix(in oklab, var(--border) 85%, transparent 15%);
+    background: linear-gradient(145deg, color-mix(in oklab, var(--surface) 84%, var(--brand) 16%), color-mix(in oklab, var(--surface) 90%, var(--accent) 10%)), var(--surface);
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--brand), var(--accent));
+      opacity: 0.95;
+    }
+
+    .tier-label {
+      margin: 0;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: color-mix(in oklab, var(--brand) 75%, var(--accent) 25%);
+    }
 
     h3 {
-      margin: 0;
-      font-size: 1.02rem;
+      margin: 0.2rem 0 0.32rem;
+      font-size: 1.1rem;
       color: var(--brand);
       line-height: 1.3;
     }
@@ -302,14 +346,17 @@
     }
   }
 
+  .tier-body {
+    padding: 0.84rem 0.9rem 0.95rem;
+  }
+
   .tier-list {
     margin: 0;
     padding-left: 0;
     color: var(--muted);
     display: grid;
-    gap: 0.42rem 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    line-height: 1.4;
+    gap: 0.42rem;
+    line-height: 1.45;
     list-style: none;
 
     li {
@@ -331,7 +378,7 @@
   }
 
   @media (max-width: 680px) {
-    .tier-list {
+    .tier-grid {
       grid-template-columns: 1fr;
     }
   }
