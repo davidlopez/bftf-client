@@ -1,21 +1,45 @@
 <script lang="ts">
   import { page } from "$app/state";
+  import membershipApplicationPdf from "../../assets/membership_application.pdf";
 
   type Theme = "light" | "dark";
 
-  const links = [
+  type NavLink = {
+    href: string;
+    label: string;
+    target?: "_blank";
+    rel?: "noreferrer";
+    download?: string;
+  };
+
+  const links: NavLink[] = [
     { href: "/", label: "Home" },
     { href: "/supporters", label: "Supporters" },
-    { href: "/bod", label: "Board of Directors" }
+    { href: "/bod", label: "Board of Directors" },
+    {
+      href: membershipApplicationPdf,
+      label: "Membership Application",
+      target: "_blank",
+      rel: "noreferrer",
+      download: "Membership Application - 2025.pdf"
+    }
   ];
 
   const partnerLinks = [
     { href: "http://www.bitnermemorialfund.org/", label: "Bitner Memorial 5K/10K" },
     { href: "http://www.odmp.org/", label: "ODMP" }
   ];
+  const donateLinks = [
+    {
+      href: "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=BFTFAPD%40gmail.com&currency_code=USD",
+      label: "PayPal"
+    },
+    { href: "https://venmo.com/u/Brotherhood-Colorado-38", label: "Venmo" }
+  ];
 
   let mobileOpen = $state(false);
   let partnerOpen = $state(false);
+  let donateOpen = $state(false);
   let partnerCloseTimer: ReturnType<typeof setTimeout> | null = null;
   let { theme = "light", onThemeToggle } = $props<{ theme?: Theme; onThemeToggle: () => void }>();
 
@@ -24,6 +48,7 @@
   const closeMenus = () => {
     mobileOpen = false;
     partnerOpen = false;
+    donateOpen = false;
   };
 
   const openPartners = () => {
@@ -69,7 +94,16 @@
       <a class="brand" href="/">BFTF Colorado</a>
 
       {#each links as link}
-        <a class:active={isActive(link.href)} href={link.href}>{link.label}</a>
+        <a class:active={isActive(link.href)} href={link.href} target={link.target} rel={link.rel} download={link.download}>
+          <span class="nav-link-label">{link.label}</span>
+          {#if link.download}
+            <svg class="download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 3v11" stroke-linecap="round" />
+              <path d="m7 11 5 5 5-5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5 20h14" stroke-linecap="round" />
+            </svg>
+          {/if}
+        </a>
       {/each}
 
       <div class="dropdown" role="presentation" onmouseenter={openPartners} onmouseleave={closePartnersWithDelay}>
@@ -86,19 +120,21 @@
         {/if}
       </div>
 
-      <a class="donate" href="https://www.paypal.com/paypalme/brotherhoodaurora" target="_blank" rel="noreferrer"> Support Us </a>
+      <div class="donate-pop" role="presentation">
+        <button class="donate" type="button" onclick={() => (donateOpen = !donateOpen)} aria-expanded={donateOpen}>Support Us</button>
+        {#if donateOpen}
+          <div class="donate-menu">
+            {#each donateLinks as donate}
+              <a href={donate.href} target="_blank" rel="noreferrer" onclick={() => (donateOpen = false)}>{donate.label}</a>
+            {/each}
+          </div>
+        {/if}
+      </div>
     </nav>
 
     <nav class="mobile-nav" aria-label="Mobile navigation">
       <a class="brand" href="/" onclick={closeMenus}>BFTF Colorado</a>
-      <button
-        class="hamburger"
-        class:is-open={mobileOpen}
-        aria-expanded={mobileOpen}
-        type="button"
-        onclick={() => (mobileOpen = !mobileOpen)}
-        aria-label="Toggle navigation menu"
-      >
+      <button class="hamburger" class:is-open={mobileOpen} aria-expanded={mobileOpen} type="button" onclick={() => (mobileOpen = !mobileOpen)} aria-label="Toggle navigation menu">
         <span class="bar bar-1"></span>
         <span class="bar bar-2"></span>
         <span class="bar bar-3"></span>
@@ -107,7 +143,16 @@
       {#if mobileOpen}
         <div class="mobile-panel">
           {#each links as link}
-            <a class:active={isActive(link.href)} href={link.href} onclick={closeMenus}>{link.label}</a>
+            <a class:active={isActive(link.href)} href={link.href} target={link.target} rel={link.rel} download={link.download} onclick={closeMenus}>
+              <span class="nav-link-label">{link.label}</span>
+              {#if link.download}
+                <svg class="download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 3v11" stroke-linecap="round" />
+                  <path d="m7 11 5 5 5-5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M5 20h14" stroke-linecap="round" />
+                </svg>
+              {/if}
+            </a>
           {/each}
 
           <div class="mobile-group">Events &amp; Partners</div>
@@ -115,7 +160,16 @@
             <a class="partner-link" href={partner.href} target="_blank" rel="noreferrer">{partner.label}</a>
           {/each}
 
-          <a class="donate" href="https://www.paypal.com/paypalme/brotherhoodaurora" target="_blank" rel="noreferrer"> Support Us </a>
+          <div class="donate-pop mobile-donate-pop">
+            <button class="donate" type="button" onclick={() => (donateOpen = !donateOpen)} aria-expanded={donateOpen}>Support Us</button>
+            {#if donateOpen}
+              <div class="donate-menu mobile-donate-menu">
+                {#each donateLinks as donate}
+                  <a href={donate.href} target="_blank" rel="noreferrer" onclick={() => (donateOpen = false)}>{donate.label}</a>
+                {/each}
+              </div>
+            {/if}
+          </div>
         </div>
       {/if}
     </nav>
@@ -127,6 +181,7 @@
     position: sticky;
     top: 0;
     z-index: 40;
+    overflow: visible;
     backdrop-filter: blur(10px);
     background: var(--header-bg);
     border-bottom: 1px solid rgba(16, 35, 73, 0.08);
@@ -135,6 +190,7 @@
   .header-inner {
     width: 100%;
     position: relative;
+    overflow: visible;
   }
 
   .desktop-nav,
@@ -145,6 +201,7 @@
     align-items: center;
     gap: 1rem;
     padding: 0.85rem 3.5rem 0.85rem 0;
+    overflow: visible;
   }
 
   .brand {
@@ -172,12 +229,21 @@
     text-decoration: none;
     font-weight: 600;
     color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
     transition: color 160ms ease;
 
     &:hover,
     &.active {
       color: var(--brand);
     }
+  }
+
+  .download-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    flex: 0 0 auto;
   }
 
   .dropdown {
@@ -219,14 +285,55 @@
   }
 
   .donate {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-weight: 750;
+    border-radius: 0.7rem;
+    padding: 0.68rem 1rem;
+    border: 1px solid transparent;
     background: linear-gradient(120deg, var(--brand), var(--brand-strong));
     color: #fff;
-    border-radius: 0.65rem;
-    padding: 0.65rem 0.95rem;
 
     &:hover {
+      cursor: pointer;
       color: #fff;
       filter: brightness(1.08);
+    }
+  }
+
+  .donate-pop {
+    position: relative;
+    z-index: 45;
+  }
+
+  .donate-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.48rem);
+    min-width: 150px;
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.52rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
+    z-index: 90;
+
+    a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 0.36rem 0.45rem;
+      border-radius: 0.5rem;
+
+      &:hover {
+        color: var(--brand);
+        background: color-mix(in oklab, var(--brand) 12%, transparent 88%);
+      }
     }
   }
 
@@ -395,6 +502,20 @@
 
     .donate {
       text-align: center;
+    }
+
+    .mobile-donate-pop {
+      width: 100%;
+
+      .donate {
+        width: 100%;
+      }
+    }
+
+    .mobile-donate-menu {
+      position: static;
+      margin-top: 0.55rem;
+      box-shadow: none;
     }
   }
 

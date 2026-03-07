@@ -32,6 +32,16 @@
       text: "This organization is run by active and retired law enforcement volunteers committed to service, dignity, and accountability."
     }
   ];
+
+  const donateLinks = [
+    {
+      href: "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=BFTFAPD%40gmail.com&currency_code=USD",
+      label: "PayPal"
+    },
+    { href: "https://venmo.com/u/Brotherhood-Colorado-38", label: "Venmo" }
+  ];
+
+  let donateOpen = $state(false);
 </script>
 
 <section class="hero">
@@ -47,7 +57,16 @@
       emotional and financial support to the families of officers killed in the line of duty in Colorado and nationwide.
     </p>
     <div class="hero-actions">
-      <a href="https://www.paypal.com/paypalme/brotherhoodaurora" target="_blank" rel="noreferrer">Donate</a>
+      <div class="donate-pop">
+        <button type="button" class="donate-btn" onclick={() => (donateOpen = !donateOpen)} aria-expanded={donateOpen}>Donate / Support Us</button>
+        {#if donateOpen}
+          <div class="donate-menu">
+            {#each donateLinks as donate}
+              <a href={donate.href} target="_blank" rel="noreferrer" onclick={() => (donateOpen = false)}>{donate.label}</a>
+            {/each}
+          </div>
+        {/if}
+      </div>
       <a class="ghost" href="/supporters">Our Supporters</a>
     </div>
   </div>
@@ -167,14 +186,26 @@
     flex-wrap: wrap;
     gap: 0.7rem;
 
-    a {
+    .donate-btn,
+    .ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
       border-radius: 0.7rem;
       padding: 0.68rem 1rem;
-      font-weight: 750;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      transition: transform 160ms ease;
+    }
+
+    .donate-btn {
       background: linear-gradient(120deg, var(--accent), #f7dca0);
       color: #102349;
-      transition: transform 160ms ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font: inherit;
 
       &:hover {
         transform: translateY(-2px);
@@ -185,6 +216,44 @@
       background: transparent;
       color: #dfe9ff;
       border: 1px solid rgba(215, 227, 255, 0.45);
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  .donate-pop {
+    position: relative;
+  }
+
+  .donate-menu {
+    position: absolute;
+    left: 0;
+    top: auto;
+    bottom: calc(100% + 0.5rem);
+    min-width: 170px;
+    display: grid;
+    gap: 0.34rem;
+    padding: 0.5rem;
+    border-radius: 0.72rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
+    z-index: 5;
+
+    a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: 0.45rem;
+      padding: 0.35rem 0.42rem;
+
+      &:hover {
+        color: var(--brand);
+        background: color-mix(in oklab, var(--brand) 12%, transparent 88%);
+      }
     }
   }
 
