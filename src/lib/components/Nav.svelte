@@ -27,7 +27,13 @@
 
   const partnerLinks = [
     { href: "http://www.bitnermemorialfund.org/", label: "Bitner Memorial 5K/10K" },
-    { href: "http://www.odmp.org/", label: "ODMP" }
+    { href: "http://www.odmp.org/", label: "ODMP" },
+    {
+      href: "/troy-rains-obituary",
+      label: "Troy Raines Obituary",
+      target: "_blank",
+      rel: "noreferrer"
+    }
   ];
   const donateLinks = [
     {
@@ -121,7 +127,7 @@
       </div>
 
       <div class="donate-pop" role="presentation">
-        <button class="donate" type="button" onclick={() => (donateOpen = !donateOpen)} aria-expanded={donateOpen}>Support Us</button>
+        <button class="donate" type="button" onclick={() => (donateOpen = !donateOpen)} aria-expanded={donateOpen}> Support Us </button>
         {#if donateOpen}
           <div class="donate-menu">
             {#each donateLinks as donate}
@@ -161,7 +167,7 @@
           {/each}
 
           <div class="donate-pop mobile-donate-pop">
-            <button class="donate" type="button" onclick={() => (donateOpen = !donateOpen)} aria-expanded={donateOpen}>Support Us</button>
+            <button class="donate" type="button" onclick={() => (donateOpen = !donateOpen)} aria-expanded={donateOpen}> Support Us </button>
             {#if donateOpen}
               <div class="donate-menu mobile-donate-menu">
                 {#each donateLinks as donate}
