@@ -29,7 +29,7 @@
     { href: "http://www.bitnermemorialfund.org/", label: "Bitner Memorial 5K/10K" },
     { href: "http://www.odmp.org/", label: "ODMP" },
     {
-      href: "/troy-rains-obituary",
+      href: "/troy-raines-obituary",
       label: "Troy Raines Obituary",
       target: "_blank",
       rel: "noreferrer"
