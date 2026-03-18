@@ -15,7 +15,7 @@
     },
     {
       title: "About BFTF Colorado",
-      body: "Brotherhood for the Fallen Colorado was the third chapter in the nation. Members include Aurora PD, Thornton PD, and the Douglas County Sheriff's Office, with participation open to all Colorado law enforcement agencies."
+      body: "Brotherhood for the Fallen Colorado was the third chapter in the nation. Members include Aurora PD, Thornton PD, Englewood PD, Boulder PD, and the Douglas County Sheriff's Office, with participation open to all Colorado law enforcement agencies."
     },
     {
       title: "You can help us",

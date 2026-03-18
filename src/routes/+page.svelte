@@ -53,7 +53,7 @@
     <p class="eyebrow">Brotherhood For The Fallen Colorado</p>
     <h1>Standing With Families When The Line Of Duty Takes One Of Our Own.</h1>
     <p>
-      Brotherhood for the Fallen Colorado is a nonprofit led by officers and deputies from Aurora, Englewood, Thornton, and the Douglas County Sheriff’s Office. We provide
+      Brotherhood for the Fallen Colorado is a nonprofit led by officers and deputies from Aurora, Englewood, Thornton, Boulder, and the Douglas County Sheriff’s Office. We provide
       emotional and financial support to the families of officers killed in the line of duty in Colorado and nationwide.
     </p>
     <div class="hero-actions">
